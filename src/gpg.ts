@@ -4,9 +4,13 @@ import * as os from 'os';
 import * as exec from './exec';
 import * as openpgp from './openpgp';
 
-export const agentConfig = `default-cache-ttl 7200
+export const conf = `use-agent
+pinentry-mode loopback`;
+
+export const agentConf = `default-cache-ttl 7200
 max-cache-ttl 31536000
-allow-preset-passphrase`;
+allow-preset-passphrase
+allow-loopback-pinentry`;
 
 export interface Version {
   gnupg: string;
@@ -140,9 +144,14 @@ export const getKeygrip = async (fingerprint: string): Promise<string> => {
   });
 };
 
+export const configure = async (config: string): Promise<void> => {
+  await fs.writeFile(path.join(await getGnupgHome(), 'gpg.conf'), config, function (err) {
+    if (err) throw err;
+  });
+};
+
 export const configureAgent = async (config: string): Promise<void> => {
-  const gpgAgentConf = path.join(await getGnupgHome(), 'gpg-agent.conf');
-  await fs.writeFile(gpgAgentConf, config, function (err) {
+  await fs.writeFile(path.join(await getGnupgHome(), 'gpg-agent.conf'), config, function (err) {
     if (err) throw err;
   });
   await gpgConnectAgent('RELOADAGENT');

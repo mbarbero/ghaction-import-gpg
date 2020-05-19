@@ -43,14 +43,22 @@ describe('gpg', () => {
     });
   });
 
+  describe('configure', () => {
+    it('configures GnuPG', async () => {
+      await gpg.configure(gpg.conf);
+    });
+  });
+
   describe('importKey', () => {
     it('imports key (as armored string) to GnuPG', async () => {
+      await gpg.configure(gpg.conf);
       await gpg.importKey(userInfo.pgp).then(output => {
         console.log(output);
         expect(output).not.toEqual('');
       });
     });
     it('imports key (as base64 string) to GnuPG', async () => {
+      await gpg.configure(gpg.conf);
       await gpg.importKey(userInfo.pgp_base64).then(output => {
         console.log(output);
         expect(output).not.toEqual('');
@@ -60,6 +68,7 @@ describe('gpg', () => {
 
   describe('getKeygrip', () => {
     it('returns the keygrip', async () => {
+      await gpg.configure(gpg.conf);
       await gpg.importKey(userInfo.pgp);
       await gpg.getKeygrip(userInfo.fingerprint).then(keygrip => {
         console.log(keygrip);
@@ -70,15 +79,16 @@ describe('gpg', () => {
 
   describe('configureAgent', () => {
     it('configures GnuPG agent', async () => {
-      await gpg.configureAgent(gpg.agentConfig);
+      await gpg.configureAgent(gpg.agentConf);
     });
   });
 
   describe('presetPassphrase', () => {
     it('presets passphrase', async () => {
+      await gpg.configure(gpg.conf);
       await gpg.importKey(userInfo.pgp);
       const keygrip = await gpg.getKeygrip(userInfo.fingerprint);
-      await gpg.configureAgent(gpg.agentConfig);
+      await gpg.configureAgent(gpg.agentConf);
       await gpg.presetPassphrase(keygrip, userInfo.passphrase).then(output => {
         console.log(output);
         expect(output).not.toEqual('');
