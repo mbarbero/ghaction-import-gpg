@@ -4,7 +4,8 @@ import * as os from 'os';
 import * as exec from './exec';
 import * as openpgp from './openpgp';
 
-export const conf = `use-agent
+export const conf = `
+use-agent
 pinentry-mode loopback`;
 
 export const agentConf = `default-cache-ttl 7200
@@ -145,7 +146,7 @@ export const getKeygrip = async (fingerprint: string): Promise<string> => {
 };
 
 export const configure = async (config: string): Promise<void> => {
-  await fs.writeFile(path.join(await getGnupgHome(), 'gpg.conf'), config, {flag: 'w'}, function (err) {
+  await fs.appendFile(path.join(await getGnupgHome(), 'gpg.conf'), config, function (err) {
     if (err) throw err;
   });
 };
