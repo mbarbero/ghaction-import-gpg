@@ -4,8 +4,7 @@ import * as os from 'os';
 import * as exec from './exec';
 import * as openpgp from './openpgp';
 
-export const conf = `
-use-agent
+export const conf = `use-agent
 pinentry-mode loopback`;
 
 export const agentConf = `default-cache-ttl 7200

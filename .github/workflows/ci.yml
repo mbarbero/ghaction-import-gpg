@@ -26,6 +26,14 @@ jobs:
         name: Checkout
         uses: actions/checkout@v2
       -
+        name: Update gpg.conf
+        run: |
+          cat > ~/.gnupg/gpg.conf <<EOL
+          use-agent
+          pinentry-mode loopback
+          EOL
+          cat ~/.gnupg/gpg.conf
+      -
         name: Get test key and passphrase
         uses: actions/github-script@0.9.0
         id: test
@@ -67,6 +75,14 @@ jobs:
       -
         name: Checkout
         uses: actions/checkout@v2
+      -
+        name: Update gpg.conf
+        run: |
+          cat > ~/.gnupg/gpg.conf <<EOL
+          use-agent
+          pinentry-mode loopback
+          EOL
+          cat ~/.gnupg/gpg.conf
       -
         name: Get test key and passphrase
         uses: actions/github-script@0.9.0

@@ -27,8 +27,8 @@ async function run(): Promise<void> {
     core.info(`Datadir    : ${dirs.datadir}`);
     core.info(`Homedir    : ${dirs.homedir}`);
 
-    core.info('⚙️ Configuring GnuPG');
-    await gpg.configure(gpg.conf);
+    /*core.info('⚙️ Configuring GnuPG');
+    await gpg.configure(gpg.conf);*/
 
     core.info('🔮 Checking GPG private key');
     const privateKey = await openpgp.readPrivateKey(process.env.GPG_PRIVATE_KEY);

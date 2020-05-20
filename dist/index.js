@@ -1037,8 +1037,8 @@ function run() {
             core.info(`Libexecdir : ${dirs.libexecdir}`);
             core.info(`Datadir    : ${dirs.datadir}`);
             core.info(`Homedir    : ${dirs.homedir}`);
-            core.info('⚙️ Configuring GnuPG');
-            yield gpg.configure(gpg.conf);
+            /*core.info('⚙️ Configuring GnuPG');
+            await gpg.configure(gpg.conf);*/
             core.info('🔮 Checking GPG private key');
             const privateKey = yield openpgp.readPrivateKey(process.env.GPG_PRIVATE_KEY);
             core.debug(`Fingerprint  : ${privateKey.fingerprint}`);
