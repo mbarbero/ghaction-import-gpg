@@ -28,6 +28,7 @@ jobs:
       -
         name: Update gpg.conf
         run: |
+          mkdir -p ~/.gnupg
           cat > ~/.gnupg/gpg.conf <<EOL
           use-agent
           pinentry-mode loopback
