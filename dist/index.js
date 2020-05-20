@@ -1037,8 +1037,8 @@ function run() {
             core.info(`Libexecdir : ${dirs.libexecdir}`);
             core.info(`Datadir    : ${dirs.datadir}`);
             core.info(`Homedir    : ${dirs.homedir}`);
-            /*core.info('⚙️ Configuring GnuPG');
-            await gpg.configure(gpg.conf);*/
+            core.info('⚙️ Configuring GnuPG');
+            yield gpg.configure(gpg.conf);
             core.info('🔮 Checking GPG private key');
             const privateKey = yield openpgp.readPrivateKey(process.env.GPG_PRIVATE_KEY);
             core.debug(`Fingerprint  : ${privateKey.fingerprint}`);
@@ -1273,7 +1273,14 @@ exports.getKeygrip = (fingerprint) => __awaiter(void 0, void 0, void 0, function
     });
 });
 exports.configure = (config) => __awaiter(void 0, void 0, void 0, function* () {
-    yield fs.appendFile(path.join(yield getGnupgHome(), 'gpg.conf'), config, function (err) {
+    yield fs.mkdir(yield getGnupgHome(), {
+        recursive: true,
+        mode: 0o700
+    }, function (err) {
+        if (err)
+            throw err;
+    });
+    yield fs.writeFile(path.join(yield getGnupgHome(), 'gpg.conf'), config, function (err) {
         if (err)
             throw err;
     });
