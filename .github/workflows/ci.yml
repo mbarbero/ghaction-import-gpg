@@ -26,15 +26,6 @@ jobs:
         name: Checkout
         uses: actions/checkout@v2
       -
-        name: Update gpg.conf
-        run: |
-          mkdir -p ~/.gnupg
-          cat > ~/.gnupg/gpg.conf <<EOL
-          use-agent
-          pinentry-mode loopback
-          EOL
-          cat ~/.gnupg/gpg.conf
-      -
         name: Get test key and passphrase
         uses: actions/github-script@0.9.0
         id: test
@@ -58,6 +49,8 @@ jobs:
       -
         name: GPG user IDs
         run: |
+          ls -al ~/.gnupg/
+          ls -al ~/
           echo "fingerprint: ${{ steps.import_gpg.outputs.fingerprint }}"
           echo "keyid:       ${{ steps.import_gpg.outputs.keyid }}"
           echo "name:        ${{ steps.import_gpg.outputs.name }}"
