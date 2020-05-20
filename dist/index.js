@@ -1273,7 +1273,7 @@ exports.getKeygrip = (fingerprint) => __awaiter(void 0, void 0, void 0, function
     });
 });
 exports.configure = (config) => __awaiter(void 0, void 0, void 0, function* () {
-    yield fs.writeFile(path.join(yield getGnupgHome(), 'gpg.conf'), config, function (err) {
+    yield fs.writeFile(path.join(yield getGnupgHome(), 'gpg.conf'), config, { flag: 'w' }, function (err) {
         if (err)
             throw err;
     });

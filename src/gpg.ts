@@ -145,7 +145,7 @@ export const getKeygrip = async (fingerprint: string): Promise<string> => {
 };
 
 export const configure = async (config: string): Promise<void> => {
-  await fs.writeFile(path.join(await getGnupgHome(), 'gpg.conf'), config, function (err) {
+  await fs.writeFile(path.join(await getGnupgHome(), 'gpg.conf'), config, {flag: 'w'}, function (err) {
     if (err) throw err;
   });
 };
